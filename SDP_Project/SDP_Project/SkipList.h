@@ -36,27 +36,36 @@ public:
 
 	Element<T>* getStart() const { return start; }
 	Element<T>* getEnd() const { return end; }
+	Element<T>* getElement(T const&) const;
 	size_t getSize() const { return size; }
 };
 template <class T>
 void SkipList<T>::copyElements(SkipList<T> const& other)
 {
-	Element<T>* iter = other->start;
+	Element<T>* iter = other.getStart();
 	while (iter)
 	{
+		addElementEnd(iter->data);
 		iter = iter->next;
-		addElementEnd(iter->name);
 	}
+}
+template <class T>
+Element<T>* SkipList<T>::getElement(T const& data) const
+{
+	Element<T>* curr = start;
+	while (curr && curr->data!= data)
+		curr = curr->next;
+	return curr;
 }
 template <class T>
 void SkipList<T>::copySkipRelations(SkipList<T> const& other)
 {
-	Element<T>* iter = other->start;
+	Element<T>* iter = other.getStart();
 	while (iter)
 	{
 		if (iter->skipTo)
 		{
-			addSkipToElement(iter->data,iter->skipTo);
+			addSkipToElement(iter->data,iter->skipTo->data);
 		}
 		iter = iter->next;
 	}
@@ -64,11 +73,12 @@ void SkipList<T>::copySkipRelations(SkipList<T> const& other)
 template <class T>
 SkipList<T> const& SkipList<T>::operator=(SkipList<T> const& other)
 {
-	if (*this != other)
+	if (this != &other)
 	{
 		clear();
 		copy(other);
 	}
+	return *this;
 }
 template <class T>
 void SkipList<T>::print(std::ostream& os)const

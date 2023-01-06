@@ -153,11 +153,13 @@
   <ItemGroup>
     <ClCompile Include="SDP_Project.cpp" />
     <ClCompile Include="SkipList.cpp" />
+    <ClCompile Include="TrainStops.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="doctest.h" />
     <ClInclude Include="SkipList.h" />
     <ClInclude Include="SkipListTests.h" />
+    <ClInclude Include="TrainStops.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
