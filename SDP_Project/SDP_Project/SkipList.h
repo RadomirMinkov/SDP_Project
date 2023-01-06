@@ -21,6 +21,7 @@ private:
 	void copySkipRelations(SkipList<T> const&);
 	void copy(SkipList<T> const&);
 	void clear();
+public:
 	SkipList() :start{ nullptr }, end{ nullptr }, size{ 0 } {}
 	SkipList(SkipList<T> const&);
 	SkipList<T> const& operator=(SkipList<T> const&);
