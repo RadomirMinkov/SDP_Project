@@ -26,5 +26,11 @@
     <ClInclude Include="SkipList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="doctest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SkipListTests.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

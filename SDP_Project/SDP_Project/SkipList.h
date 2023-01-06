@@ -32,8 +32,7 @@ public:
 	bool removeElementBegining();
 	bool removeElementEnd();
 	bool removeEl(Element<T>*);
-	void print(std::ostream = std::cout)const;
-	void printnl(std::ostream = std::cout) const;
+	void print(std::ostream& os= std::cout)const;
 
 	Element<T>* getStart() const { return start; }
 	Element<T>* getEnd() const { return end; }
@@ -47,6 +46,45 @@ void SkipList<T>::copyElements(SkipList<T> const& other)
 	{
 		iter = iter->next;
 		addElementEnd(iter->name);
+	}
+}
+template <class T>
+void SkipList<T>::copySkipRelations(SkipList<T> const& other)
+{
+	Element<T>* iter = other->start;
+	while (iter)
+	{
+		if (iter->skipTo)
+		{
+			addSkipToElement(iter->data,iter->skipTo);
+		}
+		iter = iter->next;
+	}
+}
+template <class T>
+SkipList<T> const& SkipList<T>::operator=(SkipList<T> const& other)
+{
+	if (*this != other)
+	{
+		clear();
+		copy(other);
+	}
+}
+template <class T>
+void SkipList<T>::print(std::ostream& os)const
+{
+	Element<T>* curr = start;
+	while (curr)
+	{
+		if (curr->next)
+		{
+			std::cout << curr->data << " -> " << curr->next->data << "   ";
+		}
+		if (curr->skipTo)
+		{
+			std::cout << curr->data << " -> " << curr->skipTo->data << '\n';
+		}
+		curr = curr->next;
 	}
 }
 template <class T>
@@ -127,6 +165,7 @@ bool SkipList<T>::removeEl(Element<T>* element)
 		Element<T>* toDelete = start;
 		start = start->next;
 		delete toDelete;
+		start = end = nullptr;
 		size--;
 		return true;
 	}
