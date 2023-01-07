@@ -9,7 +9,6 @@ class TrainStops
 {
 private:
 	SkipList<std::string> pathBetweenCitites;
-	void readInformation();
 public:
 	TrainStops() = default;
 	TrainStops(TrainStops const&) = delete;
