@@ -151,12 +151,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Graph.cpp" />
     <ClCompile Include="SDP_Project.cpp" />
     <ClCompile Include="SkipList.cpp" />
     <ClCompile Include="TrainStops.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="doctest.h" />
+    <ClInclude Include="Graph.h" />
+    <ClInclude Include="GraphTest.h" />
     <ClInclude Include="SkipList.h" />
     <ClInclude Include="SkipListTests.h" />
     <ClInclude Include="TrainStops.h" />
