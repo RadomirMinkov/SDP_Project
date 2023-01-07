@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Box.cpp" />
     <ClCompile Include="CityTour.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="SDP_Project.cpp" />
@@ -158,6 +159,8 @@
     <ClCompile Include="TrainStops.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Box.h" />
+    <ClInclude Include="BoxTests.h" />
     <ClInclude Include="CityTour.h" />
     <ClInclude Include="CityTourTests.h" />
     <ClInclude Include="doctest.h" />

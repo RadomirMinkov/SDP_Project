@@ -36,11 +36,11 @@ TEST_CASE("Проверка дали алгоритъма за намиране на най-много посетени обекти за 
 	city.getLocations().addEdge("ArtGallery", "DzhumayaSquare", 5);
 	city.getLocations().addEdge("ArtGallery", "HistoricalMuseum", 14);
 	city.getLocations().addEdge("ArtGallery", "AntiqueTheatre", 7);
-	city.getLocations().addEdge("RomanStadium", "DzhumayaSquare", 2);
+	city.getLocations().addEdge("RomanStadium", "DzhumayaSquare", 4);
 	city.getLocations().addEdge("DzhumayaSquare", "HistoricalMuseum", 18);
 	city.getLocations().addEdge("HistoricalMuseum", "AntiqueTheatre", 12);
 	std::string test = city.visitedLocations(68);
-	CHECK(test=="Railstation RomanStadium DzhumayaSquare ArtGallery AntiqueTheatre ArtGallery DzhumayaSquare RomanStadium Railstation ");
+	CHECK(test=="Railstation ArtGallery DzhumayaSquare ArtGallery DzhumayaSquare RomanStadium Railstation ");
 	CHECK(city.visitedLocations(12) == "Railstation");
 	//Railstation ArtGallery AntiqueTheatre ArtGallery AntiqueTheatre ArtGallery ArtGallery DzhumayaSquare ArtGallery ArtGallery ArtGallery ArtGallery Railstation
 }

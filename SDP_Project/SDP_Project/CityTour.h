@@ -10,14 +10,16 @@ public:
 	CityTour(CityTour const&) = delete;
 	CityTour const& operator=(CityTour const&) = delete;
 	~CityTour() {}
-	std::string visitedLocationsHelper(std::string, int, std::vector<std::string>, unsigned);
+	void visitedLocationsHelper(std::string, int, std::vector<std::string>, unsigned, std::vector<std::pair<std::string, int>>&);
 	std::string visitedLocations(int);
+
 	Graph<std::string, int> const& getLocations() const { return locations; }
 	Graph<std::string, int>& getLocations() { return locations; }
 };
-std::string convertFromVectorToString(std::vector<std::string>);
-bool existElemInVector(std::string, std::vector<std::string>);
 std::string maximumPath(std::vector<std::pair<std::string, int>>);
+ std::string convertFromVectorToString(std::vector<std::string>);
+bool existElemInVector(std::string, std::vector<std::string>);
+
 #endif // !_CITY_TOUR_HPP
 
 

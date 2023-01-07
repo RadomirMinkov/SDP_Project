@@ -1,4 +1,5 @@
 #include "CityTour.h"
+
 bool existElemInVector(std::string elem, std::vector<std::string> vector) 
 {
 	for (std::string currElem : vector)
@@ -39,35 +40,37 @@ std::string CityTour::visitedLocations(int timeToSpare)
 			return "Railstation";
 	}
 	std::vector<std::string> path;
-	return visitedLocationsHelper("Railstation", timeToSpare, path, 0);
+	std::vector<std::pair<std::string, int>> allPaths;
+	visitedLocationsHelper("Railstation", timeToSpare, path, 0,allPaths);
+	return maximumPath(allPaths);
 }
-std::string CityTour::visitedLocationsHelper(std::string currentLocation,int timeToSpare,std::vector<std::string> path,unsigned uniqueLocations)
+void CityTour::visitedLocationsHelper(std::string currentLocation,int timeToSpare,std::vector<std::string> path,unsigned uniqueLocations, std::vector<std::pair<std::string, int>>& allPaths)
 {
+	//if wanted can be added shortest path
 	if (timeToSpare == 0 && currentLocation == "Railstation")
 	{
-		path.push_back("Railstation");
-		return convertFromVectorToString(path);
+		path.push_back(currentLocation);
+		std::pair<std::string, int> temp{ convertFromVectorToString(path),uniqueLocations };
+		allPaths.push_back(temp);
+		return;
 	}
 	if (timeToSpare <= 0)
-		return "";
-	if (currentLocation == "Railstation")
-		unsigned i{ 1 };
-	std::vector<std::pair<std::string,int>> allPaths;
+		return;
 	if (!existElemInVector(currentLocation, path))
 		uniqueLocations++;
 	path.push_back(currentLocation);
+	if (currentLocation == "Railstation")
+	{
+		std::pair<std::string, int> temp{ convertFromVectorToString(path),uniqueLocations };
+		allPaths.push_back(temp);
+	}
 	for (std::string neighbour : locations.getNeighbours(currentLocation))
 	{
 		if (timeToSpare == 68)
 			unsigned l{ 0 };
 		std::pair<std::string,std::string> currentEdge{ currentLocation,neighbour };
-		std::string currPath =  visitedLocationsHelper(neighbour, timeToSpare - locations.getWeight(currentEdge), path, uniqueLocations);
-		if (!currPath.empty())
-		{
-			std::pair<std::string,int> currPair{ currPath,uniqueLocations };
-			allPaths.push_back(currPair);
-		}
+	    visitedLocationsHelper(neighbour, timeToSpare - locations.getWeight(currentEdge), path, uniqueLocations,allPaths);
 	}
-	return maximumPath(allPaths);
+	return;
 	
 }
