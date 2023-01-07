@@ -5,15 +5,19 @@ class CityTour
 {
 private:
 	Graph<std::string, int> locations;
-	bool existElemInVector(std::string, std::vector<std::string>) const;
-	std::string maximumPath(std::vector<std::pair<std::string,int>>)const;
 public:
 	CityTour() = default;
 	CityTour(CityTour const&) = delete;
 	CityTour const& operator=(CityTour const&) = delete;
 	~CityTour() {}
-	std::string visitedLocations(std::string,int ,std::vector<std::string>&,unsigned);
+	std::string visitedLocationsHelper(std::string, int, std::vector<std::string>, unsigned);
+	std::string visitedLocations(int);
+	Graph<std::string, int> const& getLocations() const { return locations; }
+	Graph<std::string, int>& getLocations() { return locations; }
 };
+std::string convertFromVectorToString(std::vector<std::string>);
+bool existElemInVector(std::string, std::vector<std::string>);
+std::string maximumPath(std::vector<std::pair<std::string, int>>);
 #endif // !_CITY_TOUR_HPP
 
 

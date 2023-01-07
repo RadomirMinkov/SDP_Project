@@ -1,5 +1,5 @@
 #include "CityTour.h"
-bool CityTour::existElemInVector(std::string elem, std::vector<std::string> vector) const
+bool existElemInVector(std::string elem, std::vector<std::string> vector) 
 {
 	for (std::string currElem : vector)
 	{
@@ -9,8 +9,10 @@ bool CityTour::existElemInVector(std::string elem, std::vector<std::string> vect
 	return false;
 }
 
-std::string CityTour::maximumPath(std::vector<std::pair<std::string, int>> paths)const
+std::string maximumPath(std::vector<std::pair<std::string, int>> paths)
 {
+	if (paths.size() == 0)
+		return "";
 	std::pair<std::string,int> currMaximum = paths[0];
 	for (std::pair<std::string,int> path : paths)
 	{
@@ -19,24 +21,53 @@ std::string CityTour::maximumPath(std::vector<std::pair<std::string, int>> paths
 	}
 	return currMaximum.first;
 }
-std::string CityTour::visitedLocations(std::string currentLocation,int timeToSpare,std::vector<std::string>& path,unsigned uniqueLocations) 
+std::string convertFromVectorToString(std::vector<std::string> vector)
 {
-	if (timeToSpare <= 0 && currentLocation != "Railstation")
+	std::string result;
+	for (unsigned i = 0; i < vector.size(); i++)
+	{
+		result = result + vector[i] + " ";
+	}
+	return result;
+}
+std::string CityTour::visitedLocations(int timeToSpare)
+{
+	for (std::string neigbour : locations.getNeighbours("Railstation"))
+	{
+		std::pair<std::string, std::string> temp{ "Railstation", neigbour };
+		if (timeToSpare - locations.getWeight(temp) <= 0)
+			return "Railstation";
+	}
+	std::vector<std::string> path;
+	return visitedLocationsHelper("Railstation", timeToSpare, path, 0);
+}
+std::string CityTour::visitedLocationsHelper(std::string currentLocation,int timeToSpare,std::vector<std::string> path,unsigned uniqueLocations)
+{
+	if (timeToSpare == 0 && currentLocation == "Railstation")
+	{
+		path.push_back("Railstation");
+		return convertFromVectorToString(path);
+	}
+	if (timeToSpare <= 0)
 		return "";
+	if (currentLocation == "Railstation")
+		unsigned i{ 1 };
 	std::vector<std::pair<std::string,int>> allPaths;
+	if (!existElemInVector(currentLocation, path))
+		uniqueLocations++;
+	path.push_back(currentLocation);
 	for (std::string neighbour : locations.getNeighbours(currentLocation))
 	{
+		if (timeToSpare == 68)
+			unsigned l{ 0 };
 		std::pair<std::string,std::string> currentEdge{ currentLocation,neighbour };
-		path.push_back(currentLocation);
-		if (!existElemInVector(currentLocation, path))
-			uniqueLocations++;
-		std::string currPath = visitedLocations(neighbour, timeToSpare - locations.getWeight(currentEdge), path, uniqueLocations);
+		std::string currPath =  visitedLocationsHelper(neighbour, timeToSpare - locations.getWeight(currentEdge), path, uniqueLocations);
 		if (!currPath.empty())
 		{
 			std::pair<std::string,int> currPair{ currPath,uniqueLocations };
 			allPaths.push_back(currPair);
 		}
 	}
-	return "";
+	return maximumPath(allPaths);
 	
 }

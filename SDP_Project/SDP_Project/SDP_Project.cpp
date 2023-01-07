@@ -3,6 +3,7 @@
 #include "SkipListTests.h"
 #include "TrainStopsTests.h"
 #include "GraphTest.h"
+#include "CityTourTests.h"
 #include <string>
 #include "Graph.h"
 #include "TrainStops.h"

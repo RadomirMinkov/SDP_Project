@@ -38,6 +38,25 @@ TEST_CASE("Взимане на всички съседи на даден връх")
 	}
 	CHECK_EQ(i, 4);
 }
+TEST_CASE("Взимане на съседи в граф със стрингове")
+{
+	Graph<std::string, int> graph;
+	graph.addEdge("Railstation", "ArtGallery", 26);
+	graph.addEdge("Railstation", "RomanStadium", 20);
+	graph.addEdge("ArtGallery", "DzhumayaSquare", 5);
+	graph.addEdge("ArtGallery", "HistoricalMuseum", 14);
+	graph.addEdge("ArtGallery", "AntiqueTheatre", 7);
+	graph.addEdge("RomanStadium", "DzhumayaSquare", 2);
+	graph.addEdge("DzhumayaSquare", "HistoricalMuseum", 18);
+	graph.addEdge("HistoricalMuseum", "AntiqueTheatre", 12);
+	unsigned i{ 0 };
+	for (std::string neighbour : graph.getNeighbours("Railstation"))
+	{
+		CHECK((neighbour == "ArtGallery" || neighbour == "RomanStadium"));
+		i++;
+	}
+	CHECK_EQ(i, 2);
+}
 TEST_CASE("Добавяне на върхове и ребра ")
 {
 	Graph<int, int> graph;
