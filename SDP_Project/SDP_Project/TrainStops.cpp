@@ -4,3 +4,8 @@
 {
 	retur
 }*/
+
+std::string TrainStops::shortestPathBetweenTwoCitites(std::string from, std::string to) const
+{
+	return from;
+}

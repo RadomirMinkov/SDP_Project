@@ -130,7 +130,7 @@ bool SkipList<T>::addSkipToElement(T const& from, T const& to)
 	Element<T>* elFrom = curr;
 	while (curr && curr->data != to)
 		curr = curr->next;
-	if (!curr)
+	if (!curr || elFrom->skipTo || elFrom==curr || elFrom->next == curr)
 		return false;
 	elFrom->skipTo = curr;
 	return true;

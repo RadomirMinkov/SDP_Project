@@ -45,9 +45,12 @@ TEST_CASE("Тестване дали работи добавянето на връзка skip")
 	list.addElementEnd(40);
 	list.addElementEnd(30);
 	list.addSkipToElement(10, 40);
+	list.addSkipToElement(4, 4);
+	list.addSkipToElement(4, 10);
 	Element<int>* curr = list.getStart();
 	curr = curr->next;
 	CHECK_EQ(curr->skipTo->data, 40);
+	CHECK(!list.getStart()->skipTo);
 }
 TEST_CASE("Тестване на метод, който връща елемент по стойност")
 {
@@ -58,6 +61,15 @@ TEST_CASE("Тестване на метод, който връща елемент по стойност")
 	list.addElementEnd(50);
 	CHECK(!list.getElement(2));
 	CHECK_EQ(list.getElement(10), list.getStart()->next);
+}
+TEST_CASE("Тестване дали може да се добави елемент, който вече е в списъка")
+{
+	SkipList<int> list;
+	list.addElementEnd(4);
+	list.addElementEnd(10);
+	list.addElementEnd(4);
+	CHECK_EQ(list.getSize(), 2);
+	CHECK_EQ(list.getEnd()->data, 10);
 }
 TEST_CASE("Тестване на copy конструктор и оператор равно")
 {
