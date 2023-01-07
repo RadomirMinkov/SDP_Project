@@ -21,7 +21,7 @@ public:
 
 	bool changeWeight(Vertex const& vertexOne, Vertex const& vertexTwo,Weight const& weight);
 	std::set<Vertex> const& getVertices() const { return vertices; }
-	Weight const& getWeight(Edge const&) const;
+	Weight const& getWeight(Edge const&);
 	std::set<Vertex> const& getNeighbours(const Vertex&);
 
 	void print(Vertex const& begin,std::set<Vertex>& visited,std::ostream& out = std::cout);
@@ -52,7 +52,7 @@ bool Graph<Vertex, Weight>::changeWeight(Vertex const& vertexOne, Vertex const& 
 	weights[(vertexTwo, vertexOne)] = weight;
 }
 template <class Vertex, class Weight>
-Weight const& Graph<Vertex, Weight>::getWeight(Edge const& edge) const
+Weight const& Graph<Vertex, Weight>::getWeight(Edge const& edge) 
 {
 	return weights[edge];
 }
