@@ -33,5 +33,45 @@ TEST_CASE("Тестване на добавяне и премахване на сувенири")
 
 	CHECK_EQ(box.getSouvenirs().size(), 0);
 }
+TEST_CASE("Добавяне и премахване на кутия")
+{
+	Box<std::string>* box = new Box<std::string>{ "GameBox" };
+	Box<std::string>* boxOne = new Box<std::string>{ "MusicBox" };
+	Box<std::string>* boxTwo = new Box<std::string>{ "SportBox" };
+	Box<std::string>* boxThree = new Box<std::string>{ "ClothesBox" };
+	box->addBox(boxOne);
+	boxOne->addBox(boxTwo);
+	box->addBox(boxTwo);
+	box->addBox(boxThree);
+	unsigned i{ 0 };
+	for (Box<std::string>* boxEl : box->getInsideBoxes())
+	{
+		CHECK((boxEl->getName() == "MusicBox" || boxEl->getName() == "SportBox" || boxEl->getName() == "ClothesBox"));
+		i++;
+	}
+	CHECK_EQ(i, 3);
+	box->removeBox("MusicBox");
+	//box->removeBox(boxo);
+	//box->getInsideBoxes().remove(boxTwo);
+	CHECK_EQ(2, box->getInsideBoxes().size());
+	
+}
+TEST_CASE("Проверка за споделяне на памет")
+{
+	Box<std::string> box{ "GameBox" };// = new Box<std::string>{ "GameBox" };
+	Box<std::string>* boxOne = new Box<std::string>{ "MusicBox" };
+	Box<std::string>* boxTwo = new Box<std::string>{ "SportBox" };
+	Box<std::string>* boxThree = new Box<std::string>{ "ClothesBox" };
+	box.addBox(boxOne);
+	boxOne->addBox(boxTwo);
+	box.addBox(boxTwo);
+	box.addBox(boxThree);
+	Box<std::string>* copiedBox= new Box<std::string>{ boxOne };
+	boxOne->removeBox("SportBox");
+	CHECK_EQ(copiedBox->getInsideBoxes().size(),1);
+	Box<std::string> otherBox{ box };
+	box.removeBox("MusicBox");
+	CHECK_EQ(otherBox.getInsideBoxes().size(), 3);
+}
 #endif // !_BOX_TESTS_HPP
 
