@@ -74,3 +74,40 @@ void CityTour::visitedLocationsHelper(std::string currentLocation,int timeToSpar
 	return;
 	
 }
+
+std::string CityTour::readInformation() 
+{
+	std::cout << "Enter the city for which you want to see the path:";
+	std::string input;
+	std::cin >> input;
+	input += ".txt";
+	std::ifstream file;
+	file.open( input, std::ios::in);
+	if (!file.is_open())
+	{
+		return "You entered an nonexisting file";
+	}
+	std::string inputFile;
+	std::getline(file, inputFile);
+	std::stringstream str{ inputFile };
+	unsigned vertices;
+	str >> vertices;
+	unsigned edges;
+	str >> edges;
+
+	for (unsigned i = 0; i < edges; i++)
+	{
+		std::getline(file, inputFile);
+		std::stringstream edgeStream{ inputFile };
+		std::string from;
+		edgeStream >> from;
+		std::string to;
+		edgeStream >> to;
+		int weight;
+		edgeStream >> weight;
+		locations.addEdge(from, to,weight);
+	}
+	int timeToSpare;
+	file >> timeToSpare;
+	return visitedLocations(timeToSpare);
+}

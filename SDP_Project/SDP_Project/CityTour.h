@@ -1,6 +1,9 @@
 #ifndef _CITY_TOUR_HPP
 #define _CITY_TOUR_HPP
 #include "Graph.h"
+#include <fstream>
+#include <iostream>
+#include <sstream>
 class CityTour
 {
 private:
@@ -15,6 +18,8 @@ public:
 
 	Graph<std::string, int> const& getLocations() const { return locations; }
 	Graph<std::string, int>& getLocations() { return locations; }
+
+	std::string readInformation();
 };
 std::string maximumPath(std::vector<std::pair<std::string, int>>);
  std::string convertFromVectorToString(std::vector<std::string>);

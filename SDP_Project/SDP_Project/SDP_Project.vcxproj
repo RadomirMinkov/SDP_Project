@@ -176,6 +176,9 @@
     <ClInclude Include="TrainStops.h" />
     <ClInclude Include="TrainStopsTests.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Plovdiv.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
