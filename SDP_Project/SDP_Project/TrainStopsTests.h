@@ -46,5 +46,11 @@ TEST_CASE("Проверка дали алгоритъма за намиране на най-кратък път работи правилн
 	path.push_back("Yambol");
 	CHECK(stops.shortestPath(path) == "Sofia Plovdiv Dimitrovgrad StaraZagora Yambol Karnobat Burgas ");
 }
+TEST_CASE("Тестване дали работи въвеждането от конзолата")
+{
+	TrainStops stops;
+	std::string result = stops.readInformation();
+	CHECK(result == "Sofia Plovdiv Dimitrovgrad StaraZagora Yambol Karnobat Burgas ");
+}
 #endif // !_TRAIN_STOPS_TESTS_HPP
 

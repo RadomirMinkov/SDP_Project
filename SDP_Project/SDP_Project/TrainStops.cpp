@@ -1,10 +1,5 @@
 #include "TrainStops.h"
 
-/*std::string TrainStops::shortestPath(std::vector<std::string> path) const
-{
-	retur
-}*/
-
 std::string TrainStops::shortestPathBetweenTwoCitites(Element<std::string>* from,Element<std::string>* to, std::string result) const
 {
 	if (!from)
@@ -51,4 +46,46 @@ std::string TrainStops::shortestPath(std::vector<std::string> citiesToVisit) con
 		curr = curr->next;
 	}
 	return result;
+}
+
+std::string TrainStops::readInformation()
+{
+	unsigned stops;
+	std::cout << "Enter the number of the cities:";
+	std::cin >> stops;
+	std::string stopsList;
+	std::cin.get();
+	std::vector<std::string> result;
+	std::getline(std::cin, stopsList);
+	std::stringstream stringS{ stopsList };
+	for (unsigned i = 0; i < stops; i++)
+	{
+		std::string currWord;
+		stringS >> currWord;
+		result.push_back(currWord);
+	}
+	for (unsigned i = 0; i < stops; i++)
+	{
+		pathBetweenCitites.addElementEnd(result[i]);
+	}
+	std::getline(std::cin, stopsList);
+	while (stopsList != "")
+	{
+		std::stringstream stringsToSplit{ stopsList };
+		std::string from;
+		stringsToSplit >> from;
+		std::string to;
+		stringsToSplit >> to;
+		pathBetweenCitites.addSkipToElement(from, to);
+		std::getline(std::cin, stopsList);
+	}
+	std::getline(std::cin,stopsList);
+	std::stringstream stringsToSplit{ stopsList };
+	std::string word;
+	std::vector<std::string> path;
+	while (stringsToSplit >> word)
+	{
+		path.push_back(word);
+	}
+	return shortestPath(path);
 }

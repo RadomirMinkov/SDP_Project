@@ -35,7 +35,8 @@ public:
 	std::set<T>& getSouvenirs() { return souvenirs; }
 	std::list<Box<T>*> const& getInsideBoxes() const { return insideBoxes; }
 	std::list<Box<T>*>& getInsideBoxes() { return insideBoxes; }
-
+	
+	void optimizeBox();
 	void destroyBox(Box<T>* box);
 };
 template <class T>
@@ -88,6 +89,14 @@ void addContentFromOneBoxToAnother(Box<T>*& first, Box<T>* const& second)
 	for (Box<T>* _box : second->getInsideBoxes())
 	{
 		first->getInsideBoxes().push_back(_box);
+	}
+}
+template <class T>
+void addSouvenirsFromOneBoxToAnother(Box<T>*& first, Box<T>* const& second)
+{
+	for (T const& element : second->getSouvenirs())
+	{
+		first->getSouvenirs().insert(element);
 	}
 }
 template <class T>
@@ -173,6 +182,29 @@ template <class T>
 bool Box<T>::removeBox(Box<T>* const& toDel)
 {
 	return removeBox(toDel->name);
+}
+template <class T>
+void swapAndDelete(Box<T>*& first, Box<T>*& second)
+{
+	Box<T>* temp = first;
+	first = second;
+	second = temp;
+	second->getInsideBoxes().front() = nullptr;
+	delete second;
+}
+template <class T>
+void Box<T>::optimizeBox()
+{
+	for (Box<T>* box : insideBoxes)
+	{
+		if (souvenirs.size() == 0)
+		{  
+			if (insideBoxes.size() == 0)
+				removeBox(box);
+			if (insideBoxes.size() == 1)
+				swapAndDelete(box, insideBoxes.front());
+		}
+	}
 }
 #endif // !_BOX_HPP
 

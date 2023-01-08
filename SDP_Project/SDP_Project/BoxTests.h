@@ -73,5 +73,22 @@ TEST_CASE("Проверка за споделяне на памет")
 	box.removeBox("MusicBox");
 	CHECK_EQ(otherBox.getInsideBoxes().size(), 3);
 }
+TEST_CASE("Проверка на фунцкия за размяна и изтриване")
+{
+	Box<std::string> box{ "PlovdivBox" };
+	box.addSouvenir("Magnet");
+	box.addSouvenir("Book");
+	Box<std::string>* artBox = new Box<std::string>{ "Artbox" };
+	Box<std::string>* drawings = new Box<std::string>{ "Drawings" };
+	drawings->addSouvenir("OldPlovdiv");
+	artBox->addBox(drawings);
+	box.addBox(artBox);
+	for (Box<std::string>* box : box.getInsideBoxes())
+	{
+		if (box->getName() == "Artbox")
+			swapAndDelete(box, box->getInsideBoxes().front());
+	}
+	unsigned i{ 0 };
+}
 #endif // !_BOX_TESTS_HPP
 

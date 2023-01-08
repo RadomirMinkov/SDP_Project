@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <queue>
+#include <sstream>
 
 #include "SkipList.h"
 class TrainStops
@@ -17,6 +18,7 @@ public:
 	std::string shortestPath(std::vector<std::string> toVisit) const;
 	std::string shortestPathBetweenTwoCitites(Element<std::string>* from, Element<std::string>* to,std::string result) const;
 
+	std::string readInformation();
 	SkipList<std::string>& getPath() { return pathBetweenCitites; }
 	SkipList<std::string> const& getPath() const { return pathBetweenCitites; }
 };
