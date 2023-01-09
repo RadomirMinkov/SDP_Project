@@ -54,10 +54,8 @@ void BoxCabinet::readInformation()
 	for (unsigned i = 0; i < boxCount; i++)
 	{
 		std::string inputString;
-		std::getline(file, inputString);
-		std::stringstream input{ inputString };
 		Box<std::string>* currBox = new Box<std::string>();
-		input >> inputString;
+		file >> inputString;
 		typename std::vector<Box<std::string>>::iterator it;
 		it = cabinet.begin();
 		while (it != cabinet.end())
@@ -73,17 +71,17 @@ void BoxCabinet::readInformation()
 				continue;
 			Box<std::string>* newBox = new Box<std::string>{ inputString };
 			unsigned souvenirsCount{ 0 };
-			input >> souvenirsCount;
+			file >> souvenirsCount;
 			for (unsigned i = 0; i < souvenirsCount; i++)
 			{
-				input >> inputString;
+				file >> inputString;
 				newBox->addSouvenir(inputString);
 			}
 			unsigned insideBoxesCount{ 0 };
-			input >> insideBoxesCount;
+			file >> insideBoxesCount;
 			for (unsigned i = 0; i < insideBoxesCount; i++)
 			{
-				input >> inputString;
+				file >> inputString;
 				Box<std::string>* newInsideBox = new Box<std::string>{ inputString };
 				newBox->addBox(newInsideBox);
 			}
@@ -91,17 +89,17 @@ void BoxCabinet::readInformation()
 		}
 		else {
 			unsigned souvenirsCount{ 0 };
-			input >> souvenirsCount;
+			file >> souvenirsCount;
 			for (unsigned i = 0; i < souvenirsCount; i++)
 			{
-				input >> inputString;
+				file >> inputString;
 				currBox->addSouvenir(inputString);
 			}
 			unsigned insideBoxesCount{ 0 };
-			input >> insideBoxesCount;
+			file >> insideBoxesCount;
 			for (unsigned i = 0; i < insideBoxesCount; i++)
 			{
-				input >> inputString;
+				file >> inputString;
 				Box<std::string>* newInsideBox = new Box<std::string>{ inputString };
 				currBox->addBox(newInsideBox);
 			}

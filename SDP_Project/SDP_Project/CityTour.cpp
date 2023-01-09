@@ -85,26 +85,21 @@ std::string CityTour::readInformation()
 	file.open( input, std::ios::in);
 	if (!file.is_open())
 	{
-		return "Railstation";
+		return "There is no such file in the database!";
 	}
-	std::string inputFile;
-	std::getline(file, inputFile);
-	std::stringstream str{ inputFile };
 	unsigned vertices;
-	str >> vertices;
+	file >> vertices;
 	unsigned edges;
-	str >> edges;
+	file >> edges;
 
 	for (unsigned i = 0; i < edges; i++)
 	{
-		std::getline(file, inputFile);
-		std::stringstream edgeStream{ inputFile };
 		std::string from;
-		edgeStream >> from;
+		file >> from;
 		std::string to;
-		edgeStream >> to;
+		file >> to;
 		int weight;
-		edgeStream >> weight;
+		file >> weight;
 		locations.addEdge(from, to,weight);
 	}
 	int timeToSpare;
