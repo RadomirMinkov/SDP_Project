@@ -88,5 +88,8 @@
     <Text Include="Plovdiv.txt">
       <Filter>Header Files</Filter>
     </Text>
+    <Text Include="boxesList.txt">
+      <Filter>Header Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

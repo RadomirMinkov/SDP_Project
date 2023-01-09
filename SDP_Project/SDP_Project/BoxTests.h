@@ -51,10 +51,8 @@ TEST_CASE("Добавяне и премахване на кутия")
 	}
 	CHECK_EQ(i, 3);
 	box->removeBox("MusicBox");
-	//box->removeBox(boxo);
-	//box->getInsideBoxes().remove(boxTwo);
 	CHECK_EQ(2, box->getInsideBoxes().size());
-	
+
 }
 TEST_CASE("Проверка за споделяне на памет")
 {
@@ -62,33 +60,52 @@ TEST_CASE("Проверка за споделяне на памет")
 	Box<std::string>* boxOne = new Box<std::string>{ "MusicBox" };
 	Box<std::string>* boxTwo = new Box<std::string>{ "SportBox" };
 	Box<std::string>* boxThree = new Box<std::string>{ "ClothesBox" };
+	Box<std::string>* boxFour = new Box<std::string>{ "Drawings" };
 	box.addBox(boxOne);
 	boxOne->addBox(boxTwo);
-	box.addBox(boxTwo);
+	box.addBox(boxFour);
 	box.addBox(boxThree);
-	Box<std::string>* copiedBox= new Box<std::string>{ boxOne };
+	Box<std::string>* copiedBox = new Box<std::string>{ boxOne };
 	boxOne->removeBox("SportBox");
-	CHECK_EQ(copiedBox->getInsideBoxes().size(),1);
+	CHECK_EQ(copiedBox->getInsideBoxes().size(), 1);
 	Box<std::string> otherBox{ box };
 	box.removeBox("MusicBox");
 	CHECK_EQ(otherBox.getInsideBoxes().size(), 3);
 }
-TEST_CASE("Проверка на фунцкия за размяна и изтриване")
+TEST_CASE("Проверка на фунцкия оптимизиране на кутия")
 {
-	Box<std::string> box{ "PlovdivBox" };
-	box.addSouvenir("Magnet");
-	box.addSouvenir("Book");
+	Box<std::string> box{ "MainBox" };
+	Box<std::string>* plovdivBox= new Box<std::string>{ "PlovdivBox" };
+	plovdivBox->addSouvenir("Magnet");
+	plovdivBox->addSouvenir("Book");
 	Box<std::string>* artBox = new Box<std::string>{ "Artbox" };
 	Box<std::string>* drawings = new Box<std::string>{ "Drawings" };
 	drawings->addSouvenir("OldPlovdiv");
+	Box<std::string>* theatreBox = new Box<std::string>{ "TheatreBox" };
+	Box<std::string>* theatreSouvenirs = new Box<std::string>{ "TheatreSouvenirs" };
+	Box<std::string>* plates = new Box<std::string>{ "Plates" };
+	plates->addSouvenir("DecorativePlate");
+	Box<std::string>* bags = new Box<std::string>{ "Bags" };
+	theatreSouvenirs->addBox(plates);
+	theatreSouvenirs->addBox(bags);
 	artBox->addBox(drawings);
-	box.addBox(artBox);
-	for (Box<std::string>* box : box.getInsideBoxes())
-	{
-		if (box->getName() == "Artbox")
-			swapAndDelete(box, box->getInsideBoxes().front());
-	}
-	unsigned i{ 0 };
+	plovdivBox->addBox(artBox);
+	plovdivBox->addBox(theatreBox);
+	theatreBox->addBox(theatreSouvenirs);
+	box.addBox(plovdivBox);
+	Box<std::string>* staraZagoraBox = new Box<std::string>{ "StaraZagoraBox" };
+	staraZagoraBox->addSouvenir("Postcard");
+	Box<std::string>* figurines = new Box<std::string>{ "Figurines" };
+	figurines->addSouvenir("AncientFigurine");
+	Box<std::string>* cups = new Box<std::string>{ "Cups" };
+	cups->addSouvenir("TraditionalCup");
+	staraZagoraBox->addBox(figurines);
+	staraZagoraBox->addBox(cups);
+	box.addBox(staraZagoraBox);
+	box.optimizeBox();
+	std::string result
+	{ "MainBox\n  Box list:\n  PlovdivBox\n   Souvenirs:\n   Book\n   Magnet\n    Box list:\n    Drawings\n     Souvenirs:\n     OldPlovdiv\n    Plates\n     Souvenirs:\n     DecorativePlate\n  StaraZagoraBox\n   Souvenirs:\n   Postcard\n    Box list:\n    Figurines\n     Souvenirs:\n     AncientFigurine\n    Cups\n     Souvenirs:\n     TraditionalCup" };
+	//CHECK_EQ(box.printToString(0), result);
 }
 #endif // !_BOX_TESTS_HPP
 

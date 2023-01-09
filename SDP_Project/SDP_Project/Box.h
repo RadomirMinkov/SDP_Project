@@ -1,9 +1,10 @@
-#ifndef _BOX_HPP
+﻿#ifndef _BOX_HPP
 #define _BOX_HPP
 #include <string>
 #include <vector>
 #include <set>
 #include <list>
+#include <fstream>
 template <class T>
 class Box
 {
@@ -19,7 +20,7 @@ public:
 	Box(T const& _name);
 	Box(Box<T>* const& other);
 	Box(Box<T> const& other);
-	Box<T> const& operator=(Box<T> const&) = delete;
+	Box<T>*& operator=(Box<T>* const&);
 	~Box() { clear(); }
 	bool addSouvenir(T const&);
 	void addBox(Box* const&);
@@ -35,10 +36,21 @@ public:
 	std::set<T>& getSouvenirs() { return souvenirs; }
 	std::list<Box<T>*> const& getInsideBoxes() const { return insideBoxes; }
 	std::list<Box<T>*>& getInsideBoxes() { return insideBoxes; }
-	
+
+	void print(unsigned level);
 	void optimizeBox();
 	void destroyBox(Box<T>* box);
 };
+template <class T>
+Box<T>*& Box<T>::operator=(Box<T>* const& other)
+{
+	if (this != &other)
+	{
+		destroyBox(*this);
+		copyPointer(other);
+	}
+	return *this;
+}
 template <class T>
 void Box<T>::clear()
 {
@@ -137,16 +149,20 @@ bool Box<T>::addBox(T const& _name)
 template <class T>
 void Box<T>::addBox(Box<T>* const& newBox)
 {
-	for (Box<T>* element : insideBoxes)
+	typename std::list<Box<std::string>*>::iterator it;
+	it = insideBoxes.begin();
+	while (it != insideBoxes.end())
 	{
-		if (element == newBox)
+		if ((*it) == newBox)
 		{
-			addContentFromOneBoxToAnother(element, newBox);
+			addContentFromOneBoxToAnother((*it), newBox);
 			return;
 		}
+		++it;
 	}
-	Box<T>* elToAdd = new Box<T>{ newBox };
-	insideBoxes.push_back(elToAdd);
+
+	//Box<T>* elToAdd = new Box<T>{ newBox };
+	insideBoxes.push_back(newBox);
 }
 template <class T>
 void Box<T>::destroyBox(Box<T>* box)
@@ -155,9 +171,9 @@ void Box<T>::destroyBox(Box<T>* box)
 	{
 		for (Box<T>* boxEl : box->getInsideBoxes())
 		{
-			destroyBox(boxEl);
+			removeBox(boxEl);
 		}
-		delete box;
+		//delete box;
 	}
 }
 template <class T>
@@ -169,6 +185,7 @@ bool Box<T>::removeBox(T const& boxName)
 		if (box->getName() == boxName)
 		{
 			toDel = box;
+			break;
 		}
 	}
 	if (toDel->getName().empty())
@@ -176,35 +193,95 @@ bool Box<T>::removeBox(T const& boxName)
 		return false;
 	}
 	insideBoxes.remove(toDel);
-	destroyBox(toDel);
+	delete toDel;
+	return true;
 }
 template <class T>
 bool Box<T>::removeBox(Box<T>* const& toDel)
 {
 	return removeBox(toDel->name);
 }
-template <class T>
-void swapAndDelete(Box<T>*& first, Box<T>*& second)
-{
-	Box<T>* temp = first;
-	first = second;
-	second = temp;
-	second->getInsideBoxes().front() = nullptr;
-	delete second;
-}
+
 template <class T>
 void Box<T>::optimizeBox()
 {
-	for (Box<T>* box : insideBoxes)
+	typename std::list<Box<std::string>*>::iterator it;
+	it = insideBoxes.begin();
+	while (it != insideBoxes.end())
 	{
-		if (souvenirs.size() == 0)
-		{  
-			if (insideBoxes.size() == 0)
-				removeBox(box);
-			if (insideBoxes.size() == 1)
-				swapAndDelete(box, insideBoxes.front());
+		if ((*it)->getSouvenirs().size() == 0)
+		{
+			if ((*it)->getInsideBoxes().size() == 0)
+			{
+				removeBox(*it);
+				it = insideBoxes.begin();
+				continue;
+			}
+			if ((*it)->getInsideBoxes().size() == 1)
+			{
+				Box<T>* toChange = new Box<T>{ (*it)->getInsideBoxes().front() };
+				removeBox((*it));
+				addBox(toChange);
+				it=insideBoxes.begin();
+				continue;
+			}
+			(*it)->optimizeBox();
+			continue;
 		}
+		else
+			(*it)->optimizeBox();
+		++it;
 	}
+
+}
+template <class T>
+void Box<T>::print(unsigned level)
+{
+	for (unsigned i = 0; i < level; i++)
+	{
+		std::cout << " ";
+	}
+	std::cout << name<<'\n';
+	if (souvenirs.size()!=0)
+	{
+		for (unsigned i = 0; i < level + 1; i++)
+		{
+			std::cout << " ";
+		}
+		std::cout << "Souvenirs:\n";
+	}
+	for (std::string souvenir : souvenirs)
+	{
+		for (unsigned i = 0; i < level + 1; i++)
+		{
+			std::cout << " ";
+		}
+		std::cout << souvenir << '\n';
+	}
+	if (insideBoxes.size() != 0)
+	{
+		for (unsigned i = 0; i < level + 2; i++)
+		{
+			std::cout << " ";
+		}
+		std::cout << "Box list:\n";
+	}
+	for (Box<T>* box : insideBoxes )
+	{
+		box->print(level + 2);
+	}
+}
+template <class T>
+bool equalSets(std::set<T> first, std::set<T> second)
+{
+	if (first.size() != second.size())
+		return false;
+	for (std::string element : first)
+	{
+		if (second.count(element) == 0)
+			return false;
+	}
+	return true;
 }
 #endif // !_BOX_HPP
 
