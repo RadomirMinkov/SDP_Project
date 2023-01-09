@@ -19,6 +19,7 @@ public:
 	void readInformation();
 	std::vector<Box<std::string>> const& getCabinet() const { return cabinet; }
 	std::vector<Box<std::string>>& getCabinet() { return cabinet; }
+	void print();
 };
 
 bool existInList(std::string element, std::list<Box<std::string>*> vector);

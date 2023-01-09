@@ -6,8 +6,9 @@
 class Interface
 {
 private:
-
+	static void commandPrint();
 public:
+	static void startProgram();
 };
 #endif // !_INTERFACE_HPP
 

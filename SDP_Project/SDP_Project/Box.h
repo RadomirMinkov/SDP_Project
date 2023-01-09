@@ -161,8 +161,8 @@ void Box<T>::addBox(Box<T>* const& newBox)
 		++it;
 	}
 
-	//Box<T>* elToAdd = new Box<T>{ newBox };
-	insideBoxes.push_back(newBox);
+	Box<T>* elToAdd = new Box<T>{ newBox };
+	insideBoxes.push_back(elToAdd);
 }
 template <class T>
 void Box<T>::destroyBox(Box<T>* box)

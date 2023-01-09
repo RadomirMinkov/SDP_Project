@@ -40,11 +40,8 @@ std::string TrainStops::shortestPath(std::vector<std::string> citiesToVisit) con
 	{
 		result += vector[i];
 	}
-	while (curr)
-	{
-		result = result + curr->data + " ";
-		curr = curr->next;
-	}
+	if (curr)
+		result =result + shortestPathBetweenTwoCitites(curr, pathBetweenCitites.getEnd(),"") + pathBetweenCitites.getEnd()->data;
 	return result;
 }
 

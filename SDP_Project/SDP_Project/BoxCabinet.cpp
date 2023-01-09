@@ -108,5 +108,13 @@ void BoxCabinet::readInformation()
 		}
 	}
 	optimizeBoxCabinet();
+}
+void BoxCabinet::print()
+{
 	unsigned i{ 0 };
+	for (Box<std::string> box : cabinet)
+	{
+		std::cout << "Box " << i++ << '\n';
+		box.print(0);
+	}
 }

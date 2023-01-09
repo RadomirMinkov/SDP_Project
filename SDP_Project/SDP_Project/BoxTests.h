@@ -60,10 +60,10 @@ TEST_CASE("Проверка за споделяне на памет")
 	Box<std::string>* boxOne = new Box<std::string>{ "MusicBox" };
 	Box<std::string>* boxTwo = new Box<std::string>{ "SportBox" };
 	Box<std::string>* boxThree = new Box<std::string>{ "ClothesBox" };
-	Box<std::string>* boxFour = new Box<std::string>{ "Drawings" };
+	//Box<std::string>* boxFour = new Box<std::string>{ "Drawings" };
 	box.addBox(boxOne);
 	boxOne->addBox(boxTwo);
-	box.addBox(boxFour);
+	box.addBox(boxTwo);
 	box.addBox(boxThree);
 	Box<std::string>* copiedBox = new Box<std::string>{ boxOne };
 	boxOne->removeBox("SportBox");

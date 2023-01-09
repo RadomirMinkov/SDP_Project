@@ -85,7 +85,7 @@ std::string CityTour::readInformation()
 	file.open( input, std::ios::in);
 	if (!file.is_open())
 	{
-		return "You entered an nonexisting file";
+		return "Railstation";
 	}
 	std::string inputFile;
 	std::getline(file, inputFile);

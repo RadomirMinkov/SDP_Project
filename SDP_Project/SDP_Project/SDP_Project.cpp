@@ -1,5 +1,5 @@
 #include <iostream>
-#include <vector>
+/*#include <vector>
 #include <sstream>
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "SkipListTests.h"
@@ -10,10 +10,10 @@
 #include "BoxCabinetTests.h"
 #include <string>
 #include "Graph.h"
-#include "TrainStops.h"
-
-/*int main()
+#include "TrainStops.h"*/
+#include "Interface.h"
+int main()
 {
-
+	Interface::startProgram();
 	return 0;
-}*/
+}
